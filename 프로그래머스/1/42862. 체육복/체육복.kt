@@ -9,14 +9,12 @@ class Solution {
     println("차집합 ${reserve.subtract(commonElements).sorted()}")
     println("lost ${lost.subtract(commonElements).sorted()}")
 */
+        val lostSet = lost.subtract(commonElements).sorted()
+    
         for (i in reserve.subtract(commonElements).sorted()) {
-            val checkLost = lost.subtract(commonElements).sorted().find {
-                if (!receivableStudent.contains(it)) {
-                    it == i - 1 || it == i + 1
-                } else {
-                    false
-                }
-        }
+            val checkLost = lostSet.find {
+                it !in receivableStudent && (it == i - 1 || it == i + 1)
+            }
         //println(checkLost)
             checkLost?.let {
                 receivableStudent.add(it)
