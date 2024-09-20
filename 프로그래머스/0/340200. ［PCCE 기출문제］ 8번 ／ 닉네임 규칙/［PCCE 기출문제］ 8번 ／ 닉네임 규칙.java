@@ -19,7 +19,7 @@ class Solution {
             }
         }
         if(answer.length() < 3){
-            while(answer.length() < 4) {answer += "o";}
+            answer += "o".repeat(4-answer.length());
         }
         if(answer.length() > 8){
             answer = answer.substring(0, 8);
