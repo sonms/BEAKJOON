@@ -1,66 +1,54 @@
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.*
 
-fun checkNum(s : String) : Boolean {
-    val temp = s.replace("\\D".toRegex(),"")
-    // \\D는 [^0-9] 즉 0~9의 숫자가 아닌 문자열을 의미
-    // 따라서 숫자가 아닌 문자들을 공백으로 변경하라는 의미
-    var result = true
-    if (temp.isEmpty()) {
-        result = false
-    }
-    return result
-}
 fun main() {
     val sb = StringBuilder()
-    val rearr = arrayListOf<Int>()
-    var q : Queue<Int> = LinkedList<Int>()
-    val input1 = readLine()!!.toInt()
-    for (i in 1..input1) {
-        val input = readLine()!!.toString()
-        if (checkNum(input)) {
-            val t = input.split(" ")
-            val s = t[1].toInt()
-            q.offer(s)
-        } else {
 
-            if (input == "size") {
-                rearr.add(q.size)
+    val br = BufferedReader(InputStreamReader(System.`in`))
+
+    val q: Queue<Int> = LinkedList()
+
+    val n = br.readLine().toInt()
+
+    repeat(n) {
+
+        val input = br.readLine().split(" ")
+
+        when (input[0]) {
+            "push" -> {
+                val num = input[1].toInt()
+                q.offer(num)
             }
-            if (input == "empty") {
-                if (q.isEmpty()) {
-                    rearr.add(1)
-                } else {
-                    rearr.add(0)
-                }
+
+            "size" -> {
+                sb.append("${q.size}\n")
             }
-            if (input == "front") {
-                if(q.isEmpty()) {
-                    rearr.add(-1)
-                } else {
-                    rearr.add(q.peek())
-                }
+
+            "empty" -> {
+                sb.append("${
+                    if (q.isEmpty()) {
+                        1
+                    } else {
+                        0
+                    }
+                }\n")
             }
-            if (input == "back") {
-                if (q.isEmpty()) {
-                    rearr.add(-1)
-                } else {
-                    rearr.add(q.last())
-                }
+
+            "front" -> {
+                sb.append("${q.peek() ?: -1}\n")
             }
-            if (input == "pop") {
-                if (q.isEmpty()) {
-                    rearr.add(-1)
-                } else {
-                    val f = q.peek()
-                    rearr.add(f)
-                    q.poll()
-                }
+
+            "back" -> {
+                sb.append("${q.lastOrNull() ?: -1}\n")
+            }
+
+            "pop" -> {
+                val popped = q.poll()
+                sb.append("${popped ?: -1}\n")
             }
         }
     }
 
-    rearr.forEach {
-        sb.append(it).append("\n")
-    }
     print(sb)
 }
