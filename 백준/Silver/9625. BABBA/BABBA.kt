@@ -9,10 +9,13 @@ fun main() {
     val k = br.readLine().toInt()
 
     for (i in 2..k) {
-        dp[i] = dp[i].copy(
+        dp[i] = Pair(
+            dp[i-1].second,
+            dp[i-1].first+dp[i-1].second
+        )/*dp[i].copy(
             first = dp[i-1].second,
             second = dp[i-1].first + dp[i-1].second
-        )
+        )*/
     }
 
     with(System.out.bufferedWriter()) {
